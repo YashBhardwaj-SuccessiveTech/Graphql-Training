@@ -1,0 +1,17 @@
+type Query{
+    messages: [Message!]!
+    users: [User!]!
+    getuserbyId(id: ID!): User
+    posts: [Post!]!
+    getpostbyId(id: ID!): Post
+    comments: [Comment!]!
+    getcommentbyId(id: ID!): Comment
+    getpostbyuser(id: ID!): Post
+    getcommentbyuser(id: ID!): [Comment!]!
+
+}
+
+type Mutation {
+    postMessage(content: String!, author: String!): Message!
+}
+
