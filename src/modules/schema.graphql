@@ -1,17 +1,27 @@
-type Query{
-    messages: [Message!]!
-    users: [User!]!
-    getuserbyId(id: ID!): User
-    posts: [Post!]!
-    getpostbyId(id: ID!): Post
-    comments: [Comment!]!
-    getcommentbyId(id: ID!): Comment
-    getpostbyuser(id: ID!): Post
-    getcommentbyuser(id: ID!): [Comment!]!
-
+type Query {
+  messages: [Message!]!
+  users: [User!]!
+  getuserbyId(id: ID!): UserResult
+  posts: [Post!]!
+  getpostbyId(id: ID!): Post
+  comments: [Comment!]!
+  getcommentbyId(id: ID!): Comment
+  getpostbyuser(id: ID!): Post
+  getcommentbyuser(id: ID!): [Comment!]!
+  postspaginated(page: Int!, limit: Int!, sortBy: String!, order: String!): [Post]!
 }
 
 type Mutation {
-    postMessage(content: String!, author: String!): Message!
+  postMessage(content: String!, author: String!): Message!
+  updateUser(id: ID!, name: String!, email: String!): User
+  deleteComment(id: ID! , text: String!, authorid: ID!, postid: ID!): Boolean!
+  createpost(content: String!, title: String!, authorid: ID!): Post!
+  createcomment(text: String!, postid: ID!, authorid: ID!): Comment!
 }
 
+type Error{
+    code: Int!
+    message: String!
+}
+
+union UserResult = User | Error

@@ -30,5 +30,12 @@ export const resolvers = {
     author: (parent) => users.find((user) => user.id === parent.authorid),
     post: (parent) => posts.find((post) => post.id === parent.postid),
   },
+
+  UserResult: {
+    __resolveType(obj){
+      if(obj.code) return "Error"
+      return "User"
+    }
+  }
 };
 
