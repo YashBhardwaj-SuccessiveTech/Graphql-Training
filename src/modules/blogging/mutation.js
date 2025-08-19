@@ -1,12 +1,13 @@
-import { comments, posts, users } from "./dataSource";
+import { comments, posts, users } from "./dataSource.js";
 
-export const blogMutationResolver = {
+export const blogMutationResolvers = {
   createpost: (_, { content, title, authorid }) => {
     const newPost = {
       id: String(posts.length + 1),
       title,
       content,
       authorid,
+      createdAt:new Date().toISOString()
     };
     posts.push(newPost);
     return newPost;
@@ -14,7 +15,7 @@ export const blogMutationResolver = {
 
   createcomment: (_, { text, postid, authorid }) => {
     const newComment = {
-      id: String(posts.length + 1),
+      id: String(comments.length + 1),
       text,
       authorid,
       postid,

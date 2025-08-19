@@ -12,6 +12,7 @@ type Post{
     author: User!
     content: String!
     comments: [Comment!]!
+    createdAt: String!
 }
 
 type Comment{

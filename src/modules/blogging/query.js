@@ -38,7 +38,14 @@ export const blogQueryResolvers = {
           ? Number(a.id) - Number(b.id)
           : Number(b.id) - Number(a.id)
       );
+    }else if(sortBy === "date"){
+      sortedPosts.sort((a,b)=>{
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+        order === "asc"? dateA- dateB : dateB-dateA
+      });
     }
+
     const start = (page - 1) * limit;
     const end = start + limit;
     return sortedPosts.slice(start, end);

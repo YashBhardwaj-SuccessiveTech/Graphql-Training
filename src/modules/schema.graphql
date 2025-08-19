@@ -6,7 +6,7 @@ type Query {
   getpostbyId(id: ID!): Post
   comments: [Comment!]!
   getcommentbyId(id: ID!): Comment
-  getpostbyuser(id: ID!): Post
+  getpostbyuser(id: ID!): [Post!]!
   getcommentbyuser(id: ID!): [Comment!]!
   postspaginated(page: Int!, limit: Int!, sortBy: String!, order: String!): [Post]!
 }
@@ -14,7 +14,7 @@ type Query {
 type Mutation {
   postMessage(content: String!, author: String!): Message!
   updateUser(id: ID!, name: String!, email: String!): User
-  deleteComment(id: ID! , text: String!, authorid: ID!, postid: ID!): Boolean!
+  deleteComment(id: ID!): Boolean!
   createpost(content: String!, title: String!, authorid: ID!): Post!
   createcomment(text: String!, postid: ID!, authorid: ID!): Comment!
 }
