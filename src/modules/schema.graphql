@@ -12,11 +12,14 @@ type Query {
 }
 
 type Mutation {
-  postMessage(content: String!, author: String!): Message!
-  updateUser(id: ID!, name: String!, email: String!): User
+  postMessage(content: String!, title: String!): Message!
+  updateUser(id: ID!, name: String, email: String, role: String): updateUserRes
   deleteComment(id: ID!): Boolean!
   createpost(content: String!, title: String!, authorid: ID!): Post!
   createcomment(text: String!, postid: ID!, authorid: ID!): Comment!
+  registerUser(name: String!,email: String!, password: String!,role: String!): User!
+  login(email: String!, password: String!): String! # return JWT token
+  deleteUser(id: ID!): userauth!
 }
 
 type Error{
@@ -25,3 +28,9 @@ type Error{
 }
 
 union UserResult = User | Error
+
+type Subscription{
+  messagePosted: Message!
+  commentposted: Comment!
+}
+

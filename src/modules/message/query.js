@@ -1,6 +1,8 @@
-import { messages } from "./dataSource.js";
+import { Message } from "../../models/message.js";
 
 export const messageQueryResolvers = {
-  messages: () => messages,
+  messages: async () => {
+    return await Message.find().populate("author");
+  },
 };
  

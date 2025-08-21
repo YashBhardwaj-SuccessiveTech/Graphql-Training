@@ -1,7 +1,7 @@
 type Message {
   id: ID!
   content: String!
-  author: String!
+  author: User!
   createdAt: String!
-  # title: String!
+  title: String!
 }
