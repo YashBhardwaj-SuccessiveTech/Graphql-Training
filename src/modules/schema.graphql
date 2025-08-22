@@ -9,6 +9,7 @@ type Query {
   getpostbyuser(id: ID!): [Post!]!
   getcommentbyuser(id: ID!): [Comment!]!
   postspaginated(page: Int!, limit: Int!, sortBy: String!, order: String!): [Post]!
+  messagesofUser(id: ID!): [Message]
 }
 
 type Mutation {

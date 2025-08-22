@@ -1,6 +1,5 @@
 import { Message } from "../../models/message.js";
 import { pubsub } from "../../server/pubsub.js";
-import { messages } from "./dataSource.js";
 
 export const messageMutationResolvers = {
   postMessage: async (_, { content, title }, { user }) => {
