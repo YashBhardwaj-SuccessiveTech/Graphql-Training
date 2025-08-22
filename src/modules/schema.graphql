@@ -21,6 +21,8 @@ type Mutation {
   registerUser(name: String!,email: String!, password: String!,role: String!): User!
   login(email: String!, password: String!): String! # return JWT token
   deleteUser(id: ID!): userauth!
+  setUserOnline(id: ID!): User
+  setUserOffline(id: ID!): User
 }
 
 type Error{
@@ -33,5 +35,6 @@ union UserResult = User | Error
 type Subscription{
   messagePosted: Message!
   commentposted: Comment!
+  userstatuschanged: User!
 }
 

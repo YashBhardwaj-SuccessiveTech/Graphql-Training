@@ -6,6 +6,7 @@ type User {
   posts: [Post!]!
   comments: [Comment!]!
   role: String!
+  isOnline: Boolean!
 }
  
 type Post {

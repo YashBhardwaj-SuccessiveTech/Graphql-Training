@@ -88,7 +88,7 @@ export const blogMutationResolvers = {
       password: hashedPassword,
     });
 
-    await newUser.save();
+    await newUser.save(); 
     return newUser;
   },
 
