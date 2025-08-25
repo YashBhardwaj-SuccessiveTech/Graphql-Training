@@ -36,7 +36,13 @@ export const blogQueryResolvers = {
   },
 
   getcommentbyId: async (_, { id }) => {
-    return await Comment.findById(id).populate("author").populate("post");
+    const comment = await Comment.findById(id).populate("author").populate("post");
+    if(!comment){
+      return {__typename : "Error",
+      code: 404,
+      message:" No comment with this id exist"}
+    }
+    return comment;
   },
 
   getpostbyuser: async (_, { id }) => {
@@ -78,3 +84,4 @@ export const blogQueryResolvers = {
       .populate("comments");
   },
 };
+    

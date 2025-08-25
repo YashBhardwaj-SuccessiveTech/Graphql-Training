@@ -60,4 +60,11 @@ export const resolvers = {
       return "User";
     },     
   },
+
+  commentResult: {
+    __resolveType(obj) {
+      if (obj.code) return "Error";
+      return "Comment";
+    },     
+  },
 };

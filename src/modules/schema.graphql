@@ -5,7 +5,7 @@ type Query {
   posts: [Post!]!
   getpostbyId(id: ID!): Post
   comments: [Comment!]!
-  getcommentbyId(id: ID!): Comment
+  getcommentbyId(id: ID!): commentResult
   getpostbyuser(id: ID!): [Post!]!
   getcommentbyuser(id: ID!): [Comment!]!
   postspaginated(page: Int!, limit: Int!, sortBy: String!, order: String!): [Post]!
@@ -31,10 +31,11 @@ type Error{
 }
 
 union UserResult = User | Error
+union commentResult = Comment | Error
 
 type Subscription{
   messagePosted: Message!
   commentposted: Comment!
-  userstatuschanged: User!
+  userstatuschanged: User! 
 }
 
