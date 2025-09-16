@@ -1,4 +1,6 @@
-import { comments, posts, users } from "../modules/blogging/dataSource.js";
+import { Comment } from "../models/comment.js";
+import { Post } from "../models/post.js";
+import { User } from "../models/user.js";
 import { blogModule } from "../modules/blogging/index.js";
 import { messageModule } from "../modules/message/index.js";
 
@@ -7,28 +9,62 @@ export const resolvers = {
     ...messageModule.Query,
     ...blogModule.Query,
   },
+
   Mutation: {
     ...messageModule.Mutation,
+    ...blogModule.Mutation,
+  },
+
+  Subscription: {
+    ...messageModule.Subscription,
+    ...blogModule.Subscription,
   },
 
   User: {
-    posts: (parent) => {
-      return posts.filter((post) => post.authorid === parent.id);
+    posts: async (parent) => {
+      return await Post.find({ author: parent.id });
     },
-    comments: (parent) => {
-      return comments.filter((comment) => comment.authorid === parent.id);
+    comments: async (parent) => {
+      return await Comment.find({ author: parent.id });
     },
   },
 
   Post: {
-    author: (parent) => users.find((user) => user.id === parent.authorid),
-    comments: (parent) =>
-      comments.filter((comment) => comment.postid === parent.id),
+    author: async (parent) => {
+      return await User.findById(parent.author);
+    },
+    comments: async (parent) => {
+      return await Comment.find({ post: parent.id });
+    },
+  },
+ 
+  Comment: {
+    author: async (parent) => {
+      return await User.findById(parent.author);
+    },
+    post: async (parent) => {
+      return await Post.findById(parent.post);
+    },
   },
 
-  Comment: {
-    author: (parent) => users.find((user) => user.id === parent.authorid),
-    post: (parent) => posts.find((post) => post.id === parent.postid),
+  Message: {
+    author: async (parent) => {
+      const user = await User.findById(parent.author);
+      return user || null;
+    },
+  },
+
+  UserResult: {
+    __resolveType(obj) {
+      if (obj.code) return "Error";
+      return "User";
+    },     
+  },
+
+  commentResult: {
+    __resolveType(obj) {
+      if (obj.code) return "Error";
+      return "Comment";
+    },     
   },
 };
-

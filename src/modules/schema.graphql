@@ -1,17 +1,41 @@
-type Query{
-    messages: [Message!]!
-    users: [User!]!
-    getuserbyId(id: ID!): User
-    posts: [Post!]!
-    getpostbyId(id: ID!): Post
-    comments: [Comment!]!
-    getcommentbyId(id: ID!): Comment
-    getpostbyuser(id: ID!): Post
-    getcommentbyuser(id: ID!): [Comment!]!
-
+type Query {
+  messages: [Message!]!
+  users: [User!]!
+  getuserbyId(id: ID!): UserResult
+  posts: [Post!]!
+  getpostbyId(id: ID!): Post
+  comments: [Comment!]!
+  getcommentbyId(id: ID!): commentResult
+  getpostbyuser(id: ID!): [Post!]!
+  getcommentbyuser(id: ID!): [Comment!]!
+  postspaginated(page: Int!, limit: Int!, sortBy: String!, order: String!): [Post]!
+  messagesofUser(id: ID!): [Message]
 }
 
 type Mutation {
-    postMessage(content: String!, author: String!): Message!
+  postMessage(content: String!, title: String!): Message!
+  updateUser(id: ID!, name: String, email: String, role: String): updateUserRes
+  deleteComment(id: ID!): Boolean!
+  createpost(content: String!, title: String!, authorid: ID!): Post!
+  createcomment(text: String!, postid: ID!, authorid: ID!): Comment!
+  registerUser(name: String!,email: String!, password: String!,role: String!): User!
+  login(email: String!, password: String!): String! # return JWT token
+  deleteUser(id: ID!): userauth!
+  setUserOnline(id: ID!): User
+  setUserOffline(id: ID!): User
+}
+
+type Error{
+    code: Int!
+    message: String!
+}
+
+union UserResult = User | Error
+union commentResult = Comment | Error
+
+type Subscription{
+  messagePosted: Message!
+  commentposted: Comment!
+  userstatuschanged: User! 
 }
 
